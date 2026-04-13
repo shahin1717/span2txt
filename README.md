@@ -34,6 +34,8 @@ span2txt/
 │   ├── B/
 │   └── ...
 ├── data_cleaned/          # preprocessed crops (generated)
+├── model
+│   └── sign_model.pth     # trained model weights (generated)       
 ├── src/
 │   ├── preprocess.py      # OpenCV skin mask + hand crop
 │   ├── dataset.py         # PyTorch Dataset & transforms
@@ -42,7 +44,6 @@ span2txt/
 │   ├── evaluate.py        # metrics + confusion matrix
 │   ├── webcam.py          # real-time inference (Linux)
 │   └── webcam_windows.py  # real-time inference (Windows)
-├── sign_model.pth         # trained model weights (generated)
 ├── requirements.txt
 └── README.md
 ```
