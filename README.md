@@ -22,7 +22,7 @@ A deep learning pipeline that recognizes **19 letters of the Spanish Sign Langua
 ## 🔤 Supported Letters
 
 `A B C D E F G I K L M N O P Q R S T U`
-
+![image](testing/samples.png)
 ---
 
 ## 📁 Project Structure
