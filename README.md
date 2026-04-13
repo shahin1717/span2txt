@@ -40,7 +40,8 @@ span2txt/
 │   ├── model.py           # MobileNetV2 architecture
 │   ├── train.py           # training loop
 │   ├── evaluate.py        # metrics + confusion matrix
-│   └── webcam.py          # real-time inference
+│   ├── webcam.py          # real-time inference (Linux)
+│   └── webcam_windows.py  # real-time inference (Windows)
 ├── sign_model.pth         # trained model weights (generated)
 ├── requirements.txt
 └── README.md
@@ -52,7 +53,7 @@ span2txt/
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/yourusername/span2txt.git
+git clone https://github.com/shahin1717/span2txt.git
 cd span2txt
 ```
 
@@ -96,8 +97,32 @@ python train.py
 python evaluate.py
 ```
 
-### 8. Webcam demo
+---
+
+## 📷 Webcam Demo
+
+> The webcam script differs slightly between Windows and Linux due to camera backend differences.
+
+### 🪟 Windows
+Uses `cv2.CAP_DSHOW` (DirectShow) backend and auto-detects camera index:
+```cmd
+cd C:\Users\ASUS\span2txt\src
+conda activate signlang
+python webcam_windows.py
+```
+
+### 🐧 Linux / WSL
+Uses V4L2 backend. If running in WSL, webcam must be attached via `usbipd`:
 ```bash
+# On Windows (as Administrator) — attach webcam to WSL
+usbipd bind --busid 1-8
+usbipd attach --wsl --busid 1-8
+
+# In WSL — fix permissions
+sudo chmod 666 /dev/video0 /dev/video1
+
+# Run
+cd ~/span2txt/src
 python webcam.py
 ```
 
@@ -127,12 +152,14 @@ python webcam.py
 | N | 0.982 | 0.982 | 0.982 |
 | S | 0.952 | 1.000 | 0.976 |
 
+> ⚠️ **Note on accuracy:** The dataset was collected in a single session by one person under controlled lighting and background. Train and validation splits come from the same session, so the 99.35% figure reflects performance within that distribution. Real-world accuracy with different people, lighting, or cameras will be lower. This is a known limitation of single-person datasets.
+
 ---
 
 ## 🧠 How It Works
 
 ### Step 1 — OpenCV Preprocessing
-Each image goes through a skin detection pipeline before training and inference:
+Each image goes through a skin detection pipeline:
 
 1. Convert BGR → HSV colour space
 2. Create binary mask for skin-coloured pixels
@@ -171,13 +198,10 @@ Each image goes through a skin detection pipeline before training and inference:
 
 - **19 classes** (LSE alphabet letters)
 - **~100 images per class** (~1998 total)
-- Plain/white background
+- Single person, plain/white background, controlled lighting
 - High resolution JPG photos
 
 Dataset not included in this repo. To use your own dataset follow the folder structure above.
 
 ---
 
-## 📄 License
-
-MIT License — feel free to use and modify.
