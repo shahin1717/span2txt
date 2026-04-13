@@ -9,7 +9,7 @@ from dataset import build_samples, SignDataset, val_transforms
 from model import build_model
 
 DATA_DIR   = "../data_cleaned"
-MODEL_PATH = "../sign_model.pth"
+MODEL_PATH = "../model/sign_model.pth"
 DEVICE     = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def main():

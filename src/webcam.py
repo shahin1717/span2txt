@@ -8,7 +8,7 @@ from PIL import Image
 
 from model import build_model
 
-MODEL_PATH = "../sign_model.pth"
+MODEL_PATH = "../model/sign_model.pth"
 DEVICE     = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # ── Load model ──────────────────────────────
